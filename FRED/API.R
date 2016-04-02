@@ -9,7 +9,7 @@ xml_fred <- 'https://api.stlouisfed.org/fred/series?series_id=GNPCA&api_key=abcd
 
 json_fred <-'https://api.stlouisfed.org/fred/series?series_id=GNPCA&api_key=abcdefghijklmnopqrstuvwxyz123456&file_type=json'
 
-api_key <- '41fea226d2feadb38bba9391f3b58f41'
+api_key <- ''
 file_type <-
 series_id <-
 realtime_start <-  
