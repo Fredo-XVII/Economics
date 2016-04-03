@@ -11,7 +11,7 @@ json_fred <-'https://api.stlouisfed.org/fred/series?series_id=GNPCA&api_key=abcd
 
 api_url <- 'https://api.stlouisfed.org/fred/series/observations?'
 
-api_key <- '41fea226d2feadb38bba9391f3b58f41'
+api_key <- ''
 file_type <- 'json'
 series_id <- 'A191RL1Q225SBEA'
 realtime_start <- '1929-01-01' ## 'YYYY-MM-DD'
