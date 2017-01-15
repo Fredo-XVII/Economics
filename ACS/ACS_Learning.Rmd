@@ -1,0 +1,25 @@
+---
+title: "ACS Learning"
+output: 
+  html_notebook: default
+  toc: TRUE
+---
+
+# Prep packages
+```{r}
+#source('~/R/R_startup.R', encoding = 'UTF-8')
+library(acs)
+library(dplyr)
+search()
+
+```
+
+# Let's look up some economic or demographic variable to study
+```{r}
+var1 <- "employment"
+
+tb_var1 <- acs.lookup(table.name = var1 , endyear = 2015, case.sensitive = F)
+```
+
+
+
