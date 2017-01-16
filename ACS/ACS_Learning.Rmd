@@ -10,6 +10,8 @@ output:
 #source('~/R/R_startup.R', encoding = 'UTF-8')
 library(acs)
 library(dplyr)
+library(choroplethr)
+cat('\14')
 search()
 
 ```
@@ -18,8 +20,27 @@ search()
 ```{r}
 var1 <- "employment"
 
+#acs.lookup(keyword = "Hispanic" , endyear = 2015, case.sensitive = F)
 tb_var1 <- acs.lookup(table.name = var1 , endyear = 2015, case.sensitive = F)
+View(tb_var1@results)
 ```
 
+List of possible variables : B23025, C23002A
+```{r}
+codebook_var1 <- tb_var1@results[tb_var1@results$table.number == "B23025",]
+codebook_var1
+```
+
+Set the geo - level for the data:
+```{r}
+geo_MN <- geo.make(state = "MN", county = "Hennepin" , tract = "*" , block.group = "*")
+geo_MN
+```
+
+Fetch the ACS data, you need your BLS API key.
+```{r}
+
+acs.fetch(2015, span = 5, geography = geo_MN , table.number = "B23025") # col.names = "pretty"
+```
 
 
