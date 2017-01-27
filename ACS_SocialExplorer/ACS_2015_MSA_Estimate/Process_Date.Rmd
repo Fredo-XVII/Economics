@@ -1,0 +1,67 @@
+---
+title: "ACS 2015 5yr MSA Estimate: Process Data""
+output: 
+  html_notebook: default
+  toc: TRUE
+  toc_float: TRUE
+---
+
+# Saving code progress criteria
+
+```{r}
+
+savehistory("~/Economics/ACS_SocialExplorer/ACS_2015_MSA_Estimate/ACS_2015_5yr_MSA_Process_Data.Rhistory")
+save.image("~/Economics/ACS_SocialExplorer/ACS_2015_MSA_Estimate/ACS_2015_5yr_MSA_Process_Data.RData")
+
+```
+
+<br> </br>
+
+# Import Packages
+```{r}
+source('~/R/R_startup.R' , encoding = 'UTF-8')
+cat('\14')
+sessionInfo()
+```
+
+# Import ACS MSA file
+```{r}
+library("data.table")
+ACS_2015_MSA <- fread("ACS_2015_5yr_MSA_data.csv", na.strings = "" )
+
+```
+
+# Grab the first two rows that have the Variable name and the Variable description
+```{r}
+col_desc <- ACS_2015_MSA[1:2,]
+
+```
+
+# Remove 1st row of Column descriptions
+```{r}
+nrow(ACS_2015_MSA)
+ACS_2015_MSA_base <- ACS_2015_MSA[2:1003,]
+
+is.na(ACS_2015_MSA$County)
+
+rm_col <- function (df) {
+  for (i in 1:ncol(df)) {
+    df[, colSums(is.na(df$i)) != nrow(df)]
+  }
+}
+  
+rm_col(ACS_2015_MSA_base)
+```
+
+
+
+
+# Convert Numeric data to Numeric
+```{r}
+
+Numeric_cols <- ACS_2015_MSA[55:]
+
+```
+
+
+
