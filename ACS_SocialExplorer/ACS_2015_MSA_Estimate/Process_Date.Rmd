@@ -1,18 +1,22 @@
 ---
-title: "ACS 2015 5yr MSA Estimate: Process Data""
+title: "ACS Census Estimate Data: Process Data""
 output: 
   html_notebook: default
   toc: TRUE
   toc_float: TRUE
 ---
 
+# Note
+  - This code proceses the ACS Census data from the socialexplorer.com website
+
 # Saving code progress criteria
 
 ```{r}
 
-savehistory("~/Economics/ACS_SocialExplorer/ACS_2015_MSA_Estimate/ACS_2015_5yr_MSA_Process_Data.Rhistory")
-save.image("~/Economics/ACS_SocialExplorer/ACS_2015_MSA_Estimate/ACS_2015_5yr_MSA_Process_Data.RData")
-
+savehistory("ACS_2015_5yr_MSA_Process_Data.Rhistory")
+save.image("ACS_2015_5yr_MSA_Process_Data.RData")
+# Set working directory where data is located:
+setwd("C:/Users/marqu/Documents/GitHub/Economics/ACS_SocialExplorer/ACS_2015_MSA_Estimate")
 ```
 
 <br> </br>
@@ -23,45 +27,64 @@ source('~/R/R_startup.R' , encoding = 'UTF-8')
 cat('\14')
 sessionInfo()
 ```
+<br></br>
 
-# Import ACS MSA file
+# Input parameters needed for data processing
+
 ```{r}
-library("data.table")
-ACS_2015_MSA <- fread("ACS_2015_5yr_MSA_data.csv", na.strings = "" )
-
+#input_file <- 'ACS_2015_5yr_MSA_data.csv' # input for package
+input_file <- 'C:\\Users\\marqu\\Documents\\GitHub\\Economics\\ACS_SocialExplorer\\ACS_2015_BlockGroup_Estimate\\ACS_2015_5yr_BlockGroup_data.csv'
+output_Meta_data <- 'ACS_BG_Meta_Data_2015.csv'
+output_ACS_data <- 'ACS_BG_Data_2015.csv'
 ```
+<br></br>
 
 # Grab the first two rows that have the Variable name and the Variable description
 ```{r}
-col_desc <- ACS_2015_MSA[1:2,]
+library(tcltk)
+
+
+col_desc <- read_csv(input_file, n_max = 2, col_names = FALSE)
+Variable_Name <- gather(col_desc[2,], value = "Variable_Name")
+Variable_Description <- gather(col_desc[1,], value = "Variable_Description")
+Meta_data <- left_join(Variable_Name, Variable_Description, by = "key")
+Meta_data$key <- NULL
+write_csv(Meta_data, output_Meta_data ) # input for package
 
 ```
+<br></br>
 
-# Remove 1st row of Column descriptions
+# Import ACS MSA file
 ```{r}
-nrow(ACS_2015_MSA)
-ACS_2015_MSA_base <- ACS_2015_MSA[2:1003,]
-
-is.na(ACS_2015_MSA$County)
-
-rm_col <- function (df) {
-  for (i in 1:ncol(df)) {
-    df[, colSums(is.na(df$i)) != nrow(df)]
-  }
-}
-  
-rm_col(ACS_2015_MSA_base)
+# hadley read
+ACS_Data <- read_csv(input_file, skip = 1 , n_max = 1000)
 ```
+<br></br>
 
 
+# Remove columns with NA in all rows
+```{r}
+
+ACS_Data <- ACS_Data[, !(colSums(is.na(ACS_Data)) == nrow(ACS_Data))]
+```
+<br></br>
 
 
 # Convert Numeric data to Numeric
 ```{r}
 
-Numeric_cols <- ACS_2015_MSA[55:]
-
+ACS_Data[, 14:ncol(ACS_Data)] <- sapply(ACS_Data[, 14:ncol(ACS_Data)], as.numeric) # 12 msa 13 bg
 ```
+<br></br>
+
+
+# Write the data to disk
+```{r}
+write_csv(ACS_Data , output_ACS_data )
+
+rm(list = c(ls()))
+```
+
 
 
 
