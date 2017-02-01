@@ -15,5 +15,9 @@ The new HTTPS URLs for all BLS.gov websites are as follows:
 If you have questions or comments, please contact the LABSTAT at: Helpdesk 
 
 ## Census 
-Shape files for all years and all land areas: http://www2.census.gov/geo/tiger/
-CBSA 2015 Tiger Shape files - http://www2.census.gov/geo/tiger/TIGER2015/CBSA/
+Tiger files:
+ - Shape files for all years and all land areas: http://www2.census.gov/geo/tiger/
+ - CBSA 2015 Tiger Shape files - http://www2.census.gov/geo/tiger/TIGER2015/CBSA/
+ 
+Gazetteer files (lat long):
+ - https://www.census.gov/geo/maps-data/data/gazetteer.html
