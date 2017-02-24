@@ -97,7 +97,11 @@ ACS_Data[, 2:3] <- sapply(ACS_Data[, 2:3], function(y) gsub("; " , "_",y) )
 # Write the data to disk
 ```{r}
 write_csv(ACS_Data , output_ACS_data )
-write_tsv(ACS_Data , output_ACS_data ) # Write as Tab-delimited for HIVE upload
+#write_tsv(ACS_Data , output_ACS_data ) # Write as Tab-delimited for HIVE upload
+
+# Compressing
+#msa_zipped <- bzfile(output_ACS_data_bz2)
+#write.csv(ACS_Data, bzfile(output_ACS_data_bz2))
 ```
 <br></br>
 
