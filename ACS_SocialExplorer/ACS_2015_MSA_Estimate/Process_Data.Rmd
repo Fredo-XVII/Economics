@@ -9,6 +9,15 @@ output:
 # Note
   - This code proceses the ACS Census data from the socialexplorer.com website
 
+<br> </br>
+
+# Load workspace
+```{r}
+loadhistory("ACS_2015_5yr_MSA_Process_Data.Rhistory")
+load("ACS_2015_5yr_MSA_Process_Data.RData")
+```
+<br> </br>
+
 # Saving code progress criteria
 
 ```{r}
@@ -18,7 +27,6 @@ save.image("ACS_2015_5yr_MSA_Process_Data.RData")
 # Set working directory where data is located:
 setwd("C:/Users/marqu/Documents/GitHub/Economics/ACS_SocialExplorer/ACS_2015_MSA_Estimate")
 ```
-
 <br> </br>
 
 # Import Packages
@@ -34,8 +42,8 @@ sessionInfo()
 ```{r}
 #input_file <- 'ACS_2015_5yr_MSA_data.csv' # input for package
 input_file <- 'C:\\Users\\marqu\\Documents\\GitHub\\Economics\\ACS_SocialExplorer\\ACS_2015_BlockGroup_Estimate\\ACS_2015_5yr_BlockGroup_data.csv'
-output_Meta_data <- 'ACS_BG_Meta_Data_2015.csv'
-output_ACS_data <- 'ACS_BG_Data_2015.csv'
+output_Meta_data <- 'ACS_MSA_5yr_2015_Meta_Data.csv' # 'ACS_BG_5yr_2015_Meta_Data.csv'
+output_ACS_data <- 'ACS_MSA_5yr_2015.csv' # 'ACS_BG_5yr_2015.csv'
 ```
 <br></br>
 
@@ -73,15 +81,26 @@ ACS_Data <- ACS_Data[, !(colSums(is.na(ACS_Data)) == nrow(ACS_Data))]
 # Convert Numeric data to Numeric
 ```{r}
 
-ACS_Data[, 14:ncol(ACS_Data)] <- sapply(ACS_Data[, 14:ncol(ACS_Data)], as.numeric) # 12 msa 13 bg
+ACS_Data[, 12:ncol(ACS_Data)] <- sapply(ACS_Data[, 12:ncol(ACS_Data)], as.numeric) # 12 msa 13/14 bg
 ```
 <br></br>
 
+# Put single quotes around text fields for HIVE Upload
+```{r}
+
+ACS_Data[, 2:3] <- sapply(ACS_Data[, 2:3], function(y) gsub(", " , "_",y) ) # 12 msa 13/14 bg
+ACS_Data[, 2:3] <- sapply(ACS_Data[, 2:3], function(y) gsub("; " , "_",y) )
+```
 
 # Write the data to disk
 ```{r}
 write_csv(ACS_Data , output_ACS_data )
+write_tsv(ACS_Data , output_ACS_data ) # Write as Tab-delimited for HIVE upload
+```
+<br></br>
 
+# Clear the Environment
+```{r}
 rm(list = c(ls()))
 ```
 
