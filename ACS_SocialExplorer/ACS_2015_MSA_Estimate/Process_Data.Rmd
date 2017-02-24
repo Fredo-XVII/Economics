@@ -44,6 +44,8 @@ sessionInfo()
 input_file <- 'C:\\Users\\marqu\\Documents\\GitHub\\Economics\\ACS_SocialExplorer\\ACS_2015_BlockGroup_Estimate\\ACS_2015_5yr_BlockGroup_data.csv'
 output_Meta_data <- 'ACS_MSA_5yr_2015_Meta_Data.csv' # 'ACS_BG_5yr_2015_Meta_Data.csv'
 output_ACS_data <- 'ACS_MSA_5yr_2015.csv' # 'ACS_BG_5yr_2015.csv'
+output_ACS_data_tvs <- 'ACS_MSA_5yr_2015.tsv' # 'ACS_BG_5yr_2015.tsv'
+output_ACS_data_bz2 <- 'ACS_MSA_5yr_2015.csv.bzip2' # 'ACS_BG_5yr_2015.csv.bzip2'
 ```
 <br></br>
 
